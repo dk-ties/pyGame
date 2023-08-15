@@ -12,14 +12,19 @@ def ost():
     pygame.draw.circle(screen, (255, 0, 0), (50, 300), 10)
 
 
-def snake(x, y):
-    pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(x, y, 15, 15))
+rect_1 = pygame.Rect(200, 100, 150, 100)
+
+
+def redSnake(x, y):
+    redSnake = pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(x, y, 15, 15))
+
     # rect = pygame.Rect(x, y, width, height)
 
+    def moveSnake(snake, x, y):
+        pygame.Rect.move(snake, x, y)
 
-def moveSnake(snake, x, y):
-    pygame.Rect.move(snake, x, y)
 
+# activeSnake = redSnake(150, 250)
 
 while running:
     # poll for events
@@ -29,16 +34,28 @@ while running:
             running = False
             break
 
-        if event.type == pygame.KEYDOWN:
+        """ if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                moveSnake(snake, 15, 250)
                 print("Jeg burde flytte")
+                pygame.Rect.move(activeSnake, 25, 150) """
+
+    pygame.draw.rect(screen, (255, 0, 0), rect_1)
+    # screen.blit(rect_1)
+
+    key = pygame.key.get_pressed()
+    if key[pygame.K_a] == True:
+        rect_1.x += 5
+    if key[pygame.K_d] == True:
+        rect_1.move_ip(5, 0)
+    if key[pygame.K_w] == True:
+        rect_1.move_ip(0, -5)
+    if key[pygame.K_s] == True:
+        rect_1.move_ip(0, 5)
 
     # fill the screen with a color to wipe away anything from last frame
     # screen.fill("purple")
     # RENDER YOUR GAME HERE
-    snake(100, 15)
-    ost()
+
     # flip() the display to put your work on screen
     pygame.display.flip()
 
