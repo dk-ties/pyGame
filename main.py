@@ -1,9 +1,13 @@
 # Example file showing a basic pygame "game loop"
 import pygame
+import random
 
 # pygame setup
+WIDTH = 1280
+HEIGHT = 720
+
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 running = True
 
@@ -13,10 +17,16 @@ y1 = 300
 x1Change = 0
 y1Change = 0
 
+TAIL = 10
+
 RED = (255, 0, 0)
 BLUE = (0, 255, 0)
 
-rect_1 = pygame.Rect(x1, y1, 10, 10)
+COL = BLUE
+SCORE = 0
+
+rect_1 = pygame.Rect(x1, y1, TAIL, 10)
+ost = pygame.Rect(random.randint(0, WIDTH), random.randint(0, HEIGHT), 10, 10)
 
 while running:
     # poll for events
@@ -43,13 +53,21 @@ while running:
     if key[pygame.K_s] == True:
         rect_1.move_ip(0, 10)
 
-    y1 += y1Change
-    x1 += x1Change
+    # Things to happen
+
+    if rect_1.colliderect(ost):
+        COL = RED
+        ost = pygame.Rect(random.randint(0, WIDTH), random.randint(0, HEIGHT), 10, 10)
+        TAIL += 10
+        rect_1 = pygame.Rect(x1, y1, TAIL, 10)
+        SCORE += 1
+        print(f"Yes you hit a Cheese and now have {SCORE} Point. Good Job")
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
     # RENDER YOUR GAME HERE
-    pygame.draw.rect(screen, RED, rect_1)
+    pygame.draw.rect(screen, COL, rect_1)
+    pygame.draw.rect(screen, (255, 255, 0), ost)
     # flip() the display to put your work on screen
     pygame.display.flip()
     clock.tick(30)  # limits FPS to 60
