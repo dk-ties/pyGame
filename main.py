@@ -65,6 +65,7 @@ while running:
         COL = RED
         ost = pygame.Rect(random.randint(0, WIDTH), random.randint(0, HEIGHT), 10, 10)
         TAIL += 10
+        oldRect = rect_1.copy()
         rect_1.update(x1, y1, TAIL, 10)
         SCORE += 1
         print(f"Yes you hit a Cheese and now have {SCORE} Point. Good Job")
